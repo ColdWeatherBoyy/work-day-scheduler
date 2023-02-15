@@ -21,3 +21,20 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+// set this as window load
+$(document).ready(function() {
+  let currentDate = dayjs();
+  let currentHour = currentDate.hour();
+  // add current date to p tag, make it formatted
+  // use currentHour to validate against time listed in calendar
+  // if else to validate against after the dash in the ID
+  // using a for loop or an each
+  // use querySelector for time-block validating against the ID tag and then adding a class as appropriate
+
+
+
+  // button defined by parent to detect where to save
+  // save that to local storage
+  // get the local storage on load (maybe if else for if it exists)
+})
