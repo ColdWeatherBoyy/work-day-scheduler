@@ -23,18 +23,48 @@ $(function () {
 });
 
 // set this as window load
-$(document).ready(function() {
+// $(document).ready(function() {
+window.onload = function () {
   let currentDate = dayjs();
-  let currentHour = currentDate.hour();
-  // add current date to p tag, make it formatted
-  // use currentHour to validate against time listed in calendar
-  // if else to validate against after the dash in the ID
-  // using a for loop or an each
-  // use querySelector for time-block validating against the ID tag and then adding a class as appropriate
+  // let currentHour = currentDate.hour();
+  let currentHour = 12;
+  var currentDay = document.querySelector("#currentDay");
 
+  // can't get the o to fucking work. Adds format to p tag
+  currentDay.textContent = "Today is the " + currentDate.format("MMM DD, 'YY")
 
+  // use currentHour to validate against time listed in calendar and apply classes as necessary
+  var hourBlocks = document.querySelectorAll(".time-block");
+
+  for (let i = 0; i < hourBlocks.length; i++) {
+    let idCheck = hourBlocks[i].getAttribute("id");
+    let specificHour = getHour(idCheck);
+
+    function addClass(event) {
+      hourBlocks[i].classList.add(event);
+    }
+
+    if (specificHour === currentHour) {
+      addClass("present");
+    } else if (specificHour < currentHour) {
+      addClass("past");
+    } else {
+      addClass("future");
+    }
+  }
+
+  // make an event listener for save button click (use event delegation to help?)
+  var btnsArr = document.querySelectorAll(".saveBtn");
+  console.log(btnsArr);
+
+  
 
   // button defined by parent to detect where to save
   // save that to local storage
   // get the local storage on load (maybe if else for if it exists)
-})
+}
+
+function getHour(string) {
+  let checkHour = string.split("-")[1];
+  return(Number(checkHour));
+}
