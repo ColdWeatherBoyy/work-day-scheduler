@@ -26,15 +26,25 @@ $(function () {
 // $(document).ready(function() {
 window.onload = function () {
   let currentDate = dayjs();
-  // let currentHour = currentDate.hour();
-  let currentHour = 12;
+  let currentHour = currentDate.hour();
   var currentDay = document.querySelector("#currentDay");
+  var hourBlocks = document.querySelectorAll(".time-block");
+
 
   // can't get the o to fucking work. Adds format to p tag
   currentDay.textContent = "Today is the " + currentDate.format("MMM DD, 'YY")
 
+  // checks if there is stored value, and if so, prints it in appropriate slot
+  for (let z = 0; z < hourBlocks.length; z++) {
+    var savedEventInfo = localStorage.getItem(hourBlocks[z].getAttribute("id"));
+    var textAreaArr = document.querySelectorAll("textarea");
+    console.log(savedEventInfo);
+    if (savedEventInfo !== null) {
+      textAreaArr[z].textContent = savedEventInfo;      
+    }
+  }
+
   // use currentHour to validate against time listed in calendar and apply classes as necessary
-  var hourBlocks = document.querySelectorAll(".time-block");
 
   for (let i = 0; i < hourBlocks.length; i++) {
     idCheck = hourBlocks[i].getAttribute("id");
@@ -53,37 +63,23 @@ window.onload = function () {
     }
   }
 
-  // make an event listener for save button click (use event delegation to help?)
+  // make an event listener for save button click in localStorage.
   var btnsArr = document.querySelectorAll(".saveBtn");
   
   btnsArr.forEach(function(btn) {
     btn.addEventListener("click", function(event){
       let scheduledEv = event.target.previousElementSibling.value;
       let evTime = event.target.parentElement.getAttribute("id");
-  
-      let hourAndValue = {
-        timeSlot: evTime,
-        textValue: scheduledEv
-      }
-      console.log(hourAndValue);
-      localStorage.setItem("savedEvent"+evTime, JSON.stringify(hourAndValue));
-    })
+      // saves to localStorage the savedEvent with reference to its time and the value of the saved content
+      localStorage.setItem(evTime, scheduledEv);
+    });
   });
-
-
-
-  
-
-  // button defined by parent to detect where to save
-  // save that to local storage
-  // get the local storage on load (maybe if else for if it exists)
 }
 
 function getHour(string) {
   let checkHour = string.split("-")[1];
   return(Number(checkHour));
 }
-
 
 
   //eliinate for loop with this map function, requires an array conversion
