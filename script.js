@@ -37,7 +37,7 @@ window.onload = function () {
   var hourBlocks = document.querySelectorAll(".time-block");
 
   for (let i = 0; i < hourBlocks.length; i++) {
-    let idCheck = hourBlocks[i].getAttribute("id");
+    idCheck = hourBlocks[i].getAttribute("id");
     let specificHour = getHour(idCheck);
 
     function addClass(event) {
@@ -55,7 +55,22 @@ window.onload = function () {
 
   // make an event listener for save button click (use event delegation to help?)
   var btnsArr = document.querySelectorAll(".saveBtn");
-  console.log(btnsArr);
+  
+  btnsArr.forEach(function(btn) {
+    btn.addEventListener("click", function(event){
+      let scheduledEv = event.target.previousElementSibling.value;
+      let evTime = event.target.parentElement.getAttribute("id");
+  
+      let hourAndValue = {
+        timeSlot: evTime,
+        textValue: scheduledEv
+      }
+      console.log(hourAndValue);
+      localStorage.setItem("savedEvent"+evTime, JSON.stringify(hourAndValue));
+    })
+  });
+
+
 
   
 
@@ -68,3 +83,10 @@ function getHour(string) {
   let checkHour = string.split("-")[1];
   return(Number(checkHour));
 }
+
+
+
+  //eliinate for loop with this map function, requires an array conversion
+    // var allIDs = Array.from(hourBlocks).map(function(elem){
+      //   return elem.getAttribute("id");
+      // })
