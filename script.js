@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 
   // Adds text content to title of page with todays date
-  currentDay.textContent = "Today is the " + currentDate.format("MMM DD, 'YY")
+  currentDay.textContent = "Today is " + currentDate.format("MMM DD, 'YY")
 
   // checks if there is stored value, and if so, prints it in appropriate slot
   for (let z = 0; z < hourBlocks.length; z++) {
@@ -63,24 +63,24 @@ $(document).ready(function() {
   btnsArr.forEach(function(btn) {
     btn.addEventListener("click", function(event){
       // defines as variables the sibling and parents needed to identify the proper timeslot and value typed in by user
-      let scheduledEv = event.target.previousElementSibling.value;
-      let evTime = event.target.parentElement.getAttribute("id");
+      let scheduledEv = event.currentTarget.previousElementSibling.value;
+      let evTime = event.currentTarget.parentElement.getAttribute("id");
 
       // saves to localStorage the savedEvent with key referring to the time and the value being the content to save
       localStorage.setItem(evTime, scheduledEv);
     });
   });
-    // could be accomplished in jQuery utilizing a similar array and using 'this' to help locate the click and the appropriate surrounding elements rather than event.target. This method can be seen below:
+    // could be accomplished in jQuery utilizing a similar array and using 'this' to help locate the click and the appropriate surrounding elements rather than event.currentTarget. This method can be seen below:
 
       // var $btnsArr = $(".saveBtn");
       
       // $btnsArr.each(function() {
       //   $(this).on("click", function() {
-      //     defines as variables the sibling and parents needed to identify the proper timeslot and value typed in by user
+      //     // defines as variables the sibling and parents needed to identify the proper timeslot and value typed in by user
       //     let scheduledEv = $(this).prev().val();
       //     let evTime = $(this).parent().attr("id");
       
-      //     saves to localStorage the savedEvent with key referring to the time and the value being the content to save
+      //     // saves to localStorage the savedEvent with key referring to the time and the value being the content to save
       //     localStorage.setItem(evTime, scheduledEv);
       //   });
       // });
