@@ -40,13 +40,13 @@ $(document).ready(function() {
     }
 
     // utilizes above function to assign number/hour value to each timeslot for validation against current time
-    idCheck = hourBlocks[i].getAttribute("id");
+    var idCheck = hourBlocks[i].getAttribute("id");
     let specificHour = getHour(idCheck);
 
     function addClass(event) {
       hourBlocks[i].classList.add(event);
     }
-    // checks current actual hour against hour values of scheduler
+    // checks current actual hour against hour values of scheduler 
     if (specificHour === currentHour) {
       addClass("present");
     } else if (specificHour < currentHour) {
